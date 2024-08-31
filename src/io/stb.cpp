@@ -1,8 +1,8 @@
 #include "io/stb.hpp"
 #include "io/constants.hpp"
 
-#include "engine/object/object.hpp"
-#include "engine/objects.hpp"
+#include "engine/object/director.hpp"
+#include "engine/directors.hpp"
 
 #include <bStream.h>
 #include <iostream>
@@ -55,37 +55,38 @@ bool JStudio::IO::STBFile::Deserialize(bStream::CStream* stream)
 
 		if (objectFourcc == FOURCC_FUNCVALUES)
 		{
+			stream->seek(nextObjectOffset);
 			continue;
 		}
 
-		Engine::TObject* newObject = nullptr;
+		Engine::TDirector* newDirector = nullptr;
 
 		switch (objectFourcc)
 		{
 		case FOURCC_ACTOR:
-			newObject = new Engine::TObjectActor();
+			newDirector = new Engine::TDirectorActor();
 			break;
 		case FOURCC_CAMERA:
-			newObject = new Engine::TObjectCamera();
+			newDirector = new Engine::TDirectorCamera();
 			break;
 		case FOURCC_CONTROL:
-			newObject = new Engine::TObjectControl();
+			newDirector = new Engine::TDirectorControl();
 			break;
 		case FOURCC_MESSAGE:
-			newObject = new Engine::TObjectMessage();
+			newDirector = new Engine::TDirectorMessage();
 			break;
 		case FOURCC_PARTICLE:
-			newObject = new Engine::TObjectParticle();
+			newDirector = new Engine::TDirectorParticle();
 			break;
 		case FOURCC_SOUND:
-			newObject = new Engine::TObjectSound();
+			newDirector = new Engine::TDirectorSound();
 			break;
 		default:
 			std::cout << "STBFile::Deserialize(): Unknown object FourCC " << objectFourcc << "." << std::endl;
 			break;
 		}
 
-		if (newObject == nullptr || !newObject->Deserialize(stream))
+		if (newDirector == nullptr || !newDirector->Deserialize(stream))
 		{
 			std::cout << "STBFile::Deserialize(): Unable to deserialize actor with FourCC " << objectFourcc << "." << std::endl;
 
@@ -93,7 +94,7 @@ bool JStudio::IO::STBFile::Deserialize(bStream::CStream* stream)
 			continue;
 		}
 
-		mObjects.push_back(newObject);
+		mDirectors.push_back(newDirector);
 		stream->seek(nextObjectOffset);
 	}
 

@@ -11,7 +11,7 @@ namespace JStudio
 {
 	namespace Engine
 	{
-		class TObject;
+		class TDirector;
 		class TFunctionValue;
 	} // namespace Engine
 
@@ -20,7 +20,7 @@ namespace JStudio
 		class STBFile
 		{
 			// Sequence entities that were read from the file, or are to be written to file.
-			std::vector<Engine::TObject*> mObjects;
+			std::vector<Engine::TDirector*> mDirectors;
 			// Function values that were read from the file, or are to be written to file.
 			std::vector<Engine::TFunctionValue*> mFunctionValues;
 
@@ -32,7 +32,7 @@ namespace JStudio
 			/// Provides the sequence entities read from the file when Deserialize() was called.
 			/// </summary>
 			/// <returns>Vector containing the sequence entities read from the file.</returns>
-			std::vector<Engine::TObject*> GetObjects() { return mObjects; }
+			std::vector<Engine::TDirector*> GetObjects() { return mDirectors; }
 			/// <summary>
 			/// Provides the function values read from the file when Deserialize() was called.
 			/// </summary>
@@ -43,7 +43,7 @@ namespace JStudio
 			/// Sets the sequence entities to be written to file when Serialize() is called.
 			/// </summary>
 			/// <param name="objs">Vector of sequence objects to be written to file.</param>
-			void SetObjects(std::vector<Engine::TObject*>& objs) { mObjects = objs; }
+			void SetObjects(std::vector<Engine::TDirector*>& dirs) { mDirectors = dirs; }
 			/// <summary>
 			/// Sets the function values to be written to file when Serialize() is called.
 			/// </summary>

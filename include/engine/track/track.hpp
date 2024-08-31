@@ -3,31 +3,23 @@
 #include "types.h"
 #include "key.hpp"
 
-#include <algorithm>
-
 namespace JStudio
 {
 	namespace Engine
 	{
-		template<typename T>
 		class TTrack
 		{
-			std::vector<TKey<T>> mKeys;
+			std::vector<TKey> mKeys;
 
 		public:
 			TTrack() { }
 			virtual ~TTrack() { }
 
-			void AddKey(const T& value, uint32_t time)
-			{
-				mKeys.push_back(TKey<T>(value, time));
-				SortKeys();
-			}
+			void AddKey(const float& value, const uint32_t& time, const EUpdateType& updateType);
 
-			void SortKeys()
-			{
-				std::sort(mKeys.begin(), mKeys.end(), [](const TKey<T>& a, const TKey<T>& b) { return a.GetTime() < b.GetTime(); });
-			}
+			void SortKeys();
+
+			bool TryGetKey(const uint32_t& time, TKey& outKey);
 		};
 	} // namespace Engine
 } // namespace JStudio

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "types.h"
-#include "object.hpp"
+#include "director.hpp"
 
 namespace bStream
 {
@@ -12,14 +12,14 @@ namespace JStudio
 {
 	namespace Engine
 	{
-		class TObjectSound : public TObject
+		class TDirectorControl : public TDirector
 		{
 		protected:
 			void TranslateCommand(uint32_t curFrame, uint16_t cmdType, uint16_t updateType, bStream::CStream* stream) override;
 
 		public:
-			TObjectSound() { }
-			virtual ~TObjectSound() { }
+			TDirectorControl() { }
+			virtual ~TDirectorControl() { }
 		};
-	}
-}
+	} // namespace Engine
+} // namespace JStudio

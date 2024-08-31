@@ -28,3 +28,10 @@ add_library(libjstudio ${LIBJSTUDIO_SRC})
 
 target_include_directories(libjstudio PUBLIC include lib/bStream lib/glad/include)
 target_link_libraries(libjstudio PUBLIC glm)
+
+option(LIBJSTUDIO_BUILD_TESTER "Builds the testing app" ON)
+if (LIBJSTUDIO_BUILD_TESTER)
+  add_executable(libjstudio_tester src/tester/main.cpp)
+  target_include_directories(libjstudio_tester PUBLIC include lib/bStream)
+  target_link_libraries(libjstudio_tester PUBLIC libjstudio)
+endif (LIBJSTUDIO_BUILD_TESTER)
