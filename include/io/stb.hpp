@@ -24,26 +24,30 @@ namespace JStudio
 			// Function values that were read from the file, or are to be written to file.
 			std::vector<Engine::TFunctionValue*> mFunctionValues;
 
+			uint32_t mLength;
+
 		public:
-			STBFile() { }
+			STBFile() : mLength(0) { }
 			virtual ~STBFile() { }
 
 			/// <summary>
 			/// Provides the sequence entities read from the file when Deserialize() was called.
 			/// </summary>
 			/// <returns>Vector containing the sequence entities read from the file.</returns>
-			std::vector<Engine::TDirector*> GetObjects() { return mDirectors; }
+			std::vector<Engine::TDirector*> GetDirectors() { return mDirectors; }
 			/// <summary>
 			/// Provides the function values read from the file when Deserialize() was called.
 			/// </summary>
 			/// <returns>Vector containing the function values read from the file.</returns>
 			std::vector<Engine::TFunctionValue*> GetFunctionValues() { return mFunctionValues; }
 
+			uint32_t GetLength() const { return mLength; }
+
 			/// <summary>
 			/// Sets the sequence entities to be written to file when Serialize() is called.
 			/// </summary>
 			/// <param name="objs">Vector of sequence objects to be written to file.</param>
-			void SetObjects(std::vector<Engine::TDirector*>& dirs) { mDirectors = dirs; }
+			void SetDirectors(std::vector<Engine::TDirector*>& dirs) { mDirectors = dirs; }
 			/// <summary>
 			/// Sets the function values to be written to file when Serialize() is called.
 			/// </summary>

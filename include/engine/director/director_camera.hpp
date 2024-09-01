@@ -4,6 +4,7 @@
 #include "director.hpp"
 
 #include "engine/track/track.hpp"
+#include "engine/object/object_camera.hpp"
 
 namespace bStream
 {
@@ -14,14 +15,25 @@ namespace JStudio
 {
 	namespace Engine
 	{
-		class TDirectorParticle : public TDirector
+		class TDirectorCamera : public TDirector
 		{
+			static const uint32_t NUM_CAMERA_TRACKS = 10;
+
+			TTrack mTracks[NUM_CAMERA_TRACKS] { };
+
 		protected:
 			void TranslateCommand(uint32_t curFrame, uint16_t cmdType, uint16_t updateType, bStream::CStream* stream) override;
 
 		public:
-			TDirectorParticle() { }
-			virtual ~TDirectorParticle() { }
+			TDirectorCamera()
+			{
+				mNumTracks = NUM_CAMERA_TRACKS;
+				mTracksHead = mTracks;
+			}
+
+			virtual ~TDirectorCamera() { }
+
+			virtual TObject* CreateObject() override { return new TObjectCamera(); }
 		};
 	} // namespace Engine
 } // namespace JStudio

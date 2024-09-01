@@ -1,7 +1,7 @@
 #include "io/stb.hpp"
 #include "io/constants.hpp"
 
-#include "engine/object/director.hpp"
+#include "engine/director/director.hpp"
 #include "engine/directors.hpp"
 
 #include <bStream.h>
@@ -86,7 +86,7 @@ bool JStudio::IO::STBFile::Deserialize(bStream::CStream* stream)
 			break;
 		}
 
-		if (newDirector == nullptr || !newDirector->Deserialize(stream))
+		if (newDirector == nullptr || !newDirector->Deserialize(stream, mLength))
 		{
 			std::cout << "STBFile::Deserialize(): Unable to deserialize actor with FourCC " << objectFourcc << "." << std::endl;
 

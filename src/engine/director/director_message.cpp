@@ -1,4 +1,4 @@
-#include "engine/object/director_message.hpp"
+#include "engine/director/director_message.hpp"
 
 #include <bstream.h>
 

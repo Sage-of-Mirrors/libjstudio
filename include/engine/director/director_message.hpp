@@ -4,6 +4,7 @@
 #include "director.hpp"
 
 #include "engine/track/track.hpp"
+#include "engine/object/object_message.hpp"
 
 namespace bStream
 {
@@ -14,23 +15,25 @@ namespace JStudio
 {
 	namespace Engine
 	{
-		class TDirectorActor : public TDirector
+		class TDirectorMessage : public TDirector
 		{
-			static const uint32_t NUM_ACTOR_TRACKS = 9;
+			static const uint32_t NUM_MESSAGE_TRACKS = 1;
 
-			TTrack mTracks[NUM_ACTOR_TRACKS] { };
+			TTrack mTracks[NUM_MESSAGE_TRACKS] { };
 
 		protected:
 			void TranslateCommand(uint32_t curFrame, uint16_t cmdType, uint16_t updateType, bStream::CStream* stream) override;
 
 		public:
-			TDirectorActor()
+			TDirectorMessage()
 			{
-				mNumTracks = NUM_ACTOR_TRACKS;
+				mNumTracks = NUM_MESSAGE_TRACKS;
 				mTracksHead = mTracks;
 			}
 
-			virtual ~TDirectorActor() { }
+			virtual ~TDirectorMessage() { }
+
+			virtual TObject* CreateObject() override { return new TObjectMessage(); }
 		};
 	} // namespace Engine
 } // namespace JStudio

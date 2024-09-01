@@ -1,4 +1,4 @@
-#include "engine/object/director.hpp"
+#include "engine/director/director.hpp"
 #include "engine/track/track.hpp"
 #include "util.hpp"
 
@@ -11,7 +11,7 @@ constexpr uint8_t CONTROL_ID_PARAGRAPH = 0x80;
 constexpr uint8_t BITMASK_UPDATE_TYPE = 0x1F;
 constexpr uint8_t BITSHIFT_CMD_TYPE = 0x05;
 
-bool JStudio::Engine::TDirector::Deserialize(bStream::CStream* stream)
+bool JStudio::Engine::TDirector::Deserialize(bStream::CStream* stream, uint32_t& demoLength)
 {
 	mName = stream->readString(stream->readUInt32());
 	stream->seek(JStudio::Util::GetNextAligned(stream->tell(), 4));
@@ -53,6 +53,11 @@ bool JStudio::Engine::TDirector::Deserialize(bStream::CStream* stream)
 		}
 
 		controlByte = stream->peekUInt8(stream->tell());
+	}
+
+	if (curFrame >= demoLength)
+	{
+		demoLength = curFrame;
 	}
 
 	return true;

@@ -1,4 +1,4 @@
-#include "engine/object/director_control.hpp"
+#include "engine/director/director_control.hpp"
 
 #include <bstream.h>
 

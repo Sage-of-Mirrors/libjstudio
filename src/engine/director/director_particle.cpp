@@ -1,4 +1,4 @@
-#include "engine/object/director_particle.hpp"
+#include "engine/director/director_particle.hpp"
 
 #include <bstream.h>
 

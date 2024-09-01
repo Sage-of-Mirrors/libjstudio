@@ -1,4 +1,4 @@
-#include "engine/object/director_sound.hpp"
+#include "engine/director/director_sound.hpp"
 
 #include <bstream.h>
 

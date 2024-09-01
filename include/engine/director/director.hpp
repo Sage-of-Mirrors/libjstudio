@@ -12,6 +12,7 @@ namespace JStudio
 	namespace Engine
 	{
 		class TTrack;
+		class TObject;
 
 		class TDirector
 		{
@@ -32,10 +33,12 @@ namespace JStudio
 
 			virtual ~TDirector() { }
 
-			virtual bool Deserialize(bStream::CStream* stream);
+			virtual bool Deserialize(bStream::CStream* stream, uint32_t& demoLength);
 			virtual bool Serialize(bStream::CStream* stream);
 
 			TTrack* GetTrack(uint32_t trackIndex);
+
+			virtual TObject* CreateObject() = 0;
 		};
 	} // namespace Engine
 } // namespace JStudio
