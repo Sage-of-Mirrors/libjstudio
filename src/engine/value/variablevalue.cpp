@@ -1,4 +1,4 @@
-#include "engine/object/variablevalue.hpp"
+#include "engine/value/variablevalue.hpp"
 
 float JStudio::Engine::TVariableValue::GetValue() const
 {

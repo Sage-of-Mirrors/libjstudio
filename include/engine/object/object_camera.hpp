@@ -3,7 +3,7 @@
 #include "types.h"
 #include "object.hpp"
 
-#include "engine/object/variablevalue.hpp"
+#include "engine/value/variablevalue.hpp"
 
 namespace JStudio
 {

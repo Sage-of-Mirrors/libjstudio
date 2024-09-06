@@ -26,6 +26,9 @@ namespace JStudio
 
 			uint32_t mLength;
 
+			void LoadFunctionValues(bStream::CStream* stream);
+			void LoadObject(uint32_t objectFourcc, bStream::CStream* stream);
+
 		public:
 			STBFile() : mLength(0) { }
 			virtual ~STBFile() { }

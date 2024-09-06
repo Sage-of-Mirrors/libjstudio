@@ -1,5 +1,5 @@
 #include "engine/enginedata.hpp"
-#include "engine/object/functionvalue.hpp"
+#include "engine/value/functionvalue.hpp"
 
 JStudio::Engine::TEngineData gEngineData { };
 

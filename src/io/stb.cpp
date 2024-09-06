@@ -4,8 +4,95 @@
 #include "engine/director/director.hpp"
 #include "engine/directors.hpp"
 
+#include "engine/value/functionvalue.hpp"
+
 #include <bStream.h>
 #include <iostream>
+
+void JStudio::IO::STBFile::LoadFunctionValues(bStream::CStream* stream)
+{
+	assert(stream->readUInt32() == FVB_MAGIC);
+	assert(stream->readUInt16() == STB_BOM);
+
+	uint16_t m000E = stream->readUInt16(); // Unsure. Always 0x0100?
+	uint32_t fvbSize = stream->readUInt32();
+	uint32_t fvbCount = stream->readUInt32();
+
+	for (uint32_t i = 0; i < fvbCount; i++)
+	{
+		uint32_t funcValSize = stream->readUInt32();
+		size_t nextFuncValOffset = stream->tell() + (size_t)(funcValSize - sizeof(uint32_t)); // Subtract the length of the size from the next offset.
+
+		uint16_t funcValType = stream->readUInt16(); // What type of funcvalue this object is.
+		uint16_t m0006 = stream->readUInt16(); // Unsure.
+
+		Engine::TFunctionValue* funcValObj = nullptr;
+
+		switch (funcValType)
+		{
+		case FUNCVAL_COMPOSITE:
+			// funcValObj = new Engine::TFunctionValueComposite();
+			break;
+		case FUNCVAL_CONSTANT:
+			// funcValObj = new Engine::TFunctionValueConstant();
+			break;
+		case FUNCVAL_TRANSITION:
+			// funcValObj = new Engine::TFunctionValueTransition();
+			break;
+		case FUNCVAL_LIST:
+			// funcValObj = new Engine::TFunctionValueList();
+			break;
+		case FUNCVAL_LIST_PARAMETER:
+			// funcValObj = new Engine::TFunctionValueListParameter();
+			break;
+		case FUNCVAL_HERMITE:
+			// funcValObj = new Engine::TFunctionValueHermite();
+			break;
+		}
+
+		if (funcValObj != nullptr && funcValObj->Deserialize(stream))
+		{
+			mFunctionValues.push_back(funcValObj);
+		}
+
+		stream->seek(nextFuncValOffset);
+	}
+} // STBFile::LoadFunctionValues
+
+void JStudio::IO::STBFile::LoadObject(uint32_t objectFourcc, bStream::CStream* stream)
+{
+	Engine::TDirector* newDirector = nullptr;
+
+	switch (objectFourcc)
+	{
+	case FOURCC_ACTOR:
+		newDirector = new Engine::TDirectorActor();
+		break;
+	case FOURCC_CAMERA:
+		newDirector = new Engine::TDirectorCamera();
+		break;
+	case FOURCC_CONTROL:
+		newDirector = new Engine::TDirectorControl();
+		break;
+	case FOURCC_MESSAGE:
+		newDirector = new Engine::TDirectorMessage();
+		break;
+	case FOURCC_PARTICLE:
+		newDirector = new Engine::TDirectorParticle();
+		break;
+	case FOURCC_SOUND:
+		newDirector = new Engine::TDirectorSound();
+		break;
+	default:
+		std::cout << "STBFile::Deserialize(): Unknown object FourCC " << objectFourcc << "." << std::endl;
+		break;
+	}
+
+	if (newDirector != nullptr && newDirector->Deserialize(stream, mLength))
+	{
+		mDirectors.push_back(newDirector);
+	}
+} // STBFile::LoadObject
 
 bool JStudio::IO::STBFile::Deserialize(bStream::CStream* stream)
 {
@@ -51,50 +138,17 @@ bool JStudio::IO::STBFile::Deserialize(bStream::CStream* stream)
 		uint32_t objectSize = stream->readUInt32();
 		uint32_t objectFourcc = stream->readUInt32();
 
-		size_t nextObjectOffset = stream->tell() + (size_t)(objectSize - 8); // Subtract 8 from the size because it includes the FourCC + the size itself.
+		size_t nextObjectOffset = stream->tell() + (size_t)(objectSize - sizeof(uint32_t) * 2); // Subtract 8 from the size because it includes the FourCC + the size itself.
 
 		if (objectFourcc == FOURCC_FUNCVALUES)
 		{
-			stream->seek(nextObjectOffset);
-			continue;
+			LoadFunctionValues(stream);
 		}
-
-		Engine::TDirector* newDirector = nullptr;
-
-		switch (objectFourcc)
+		else
 		{
-		case FOURCC_ACTOR:
-			newDirector = new Engine::TDirectorActor();
-			break;
-		case FOURCC_CAMERA:
-			newDirector = new Engine::TDirectorCamera();
-			break;
-		case FOURCC_CONTROL:
-			newDirector = new Engine::TDirectorControl();
-			break;
-		case FOURCC_MESSAGE:
-			newDirector = new Engine::TDirectorMessage();
-			break;
-		case FOURCC_PARTICLE:
-			newDirector = new Engine::TDirectorParticle();
-			break;
-		case FOURCC_SOUND:
-			newDirector = new Engine::TDirectorSound();
-			break;
-		default:
-			std::cout << "STBFile::Deserialize(): Unknown object FourCC " << objectFourcc << "." << std::endl;
-			break;
+			LoadObject(objectFourcc, stream);
 		}
 
-		if (newDirector == nullptr || !newDirector->Deserialize(stream, mLength))
-		{
-			std::cout << "STBFile::Deserialize(): Unable to deserialize actor with FourCC " << objectFourcc << "." << std::endl;
-
-			stream->seek(nextObjectOffset);
-			continue;
-		}
-
-		mDirectors.push_back(newDirector);
 		stream->seek(nextObjectOffset);
 	}
 
