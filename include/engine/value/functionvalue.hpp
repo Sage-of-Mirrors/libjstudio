@@ -17,6 +17,8 @@ namespace JStudio
 			TFunctionValue() { }
 			virtual ~TFunctionValue() { }
 
+			virtual float Evaluate(int32_t frame) = 0;
+
 			virtual bool Deserialize(bStream::CStream* stream) = 0;
 			virtual bool Serialize(bStream::CStream* stream) = 0;
 		};

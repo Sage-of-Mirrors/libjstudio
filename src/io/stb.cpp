@@ -5,6 +5,7 @@
 #include "engine/directors.hpp"
 
 #include "engine/value/functionvalue.hpp"
+#include "engine/functionvalues.hpp"
 
 #include <bStream.h>
 #include <iostream>
@@ -31,22 +32,22 @@ void JStudio::IO::STBFile::LoadFunctionValues(bStream::CStream* stream)
 		switch (funcValType)
 		{
 		case FUNCVAL_COMPOSITE:
-			// funcValObj = new Engine::TFunctionValueComposite();
+			funcValObj = new Engine::TFunctionValueComposite();
 			break;
 		case FUNCVAL_CONSTANT:
-			// funcValObj = new Engine::TFunctionValueConstant();
+			funcValObj = new Engine::TFunctionValueConstant();
 			break;
 		case FUNCVAL_TRANSITION:
-			// funcValObj = new Engine::TFunctionValueTransition();
+			funcValObj = new Engine::TFunctionValueTransition();
 			break;
 		case FUNCVAL_LIST:
-			// funcValObj = new Engine::TFunctionValueList();
+			funcValObj = new Engine::TFunctionValueList();
 			break;
 		case FUNCVAL_LIST_PARAMETER:
-			// funcValObj = new Engine::TFunctionValueListParameter();
+			funcValObj = new Engine::TFunctionValueListParameter();
 			break;
 		case FUNCVAL_HERMITE:
-			// funcValObj = new Engine::TFunctionValueHermite();
+			funcValObj = new Engine::TFunctionValueHermite();
 			break;
 		}
 
