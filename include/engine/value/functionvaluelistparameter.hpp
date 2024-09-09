@@ -14,8 +14,23 @@ namespace JStudio
 	{
 		class TFunctionValueListParameter : public TFunctionValue
 		{
+			enum class EInterpolateType
+			{
+				NONE,
+				LINEAR,
+				PLATEAU,
+				BSPLINE
+			};
+
+			EInterpolateType mInterpolateType;
+
+			float InterpolateNone();
+			float InterpolateLinear();
+			float InterpolatePlateau();
+			float InterpolateBSpline();
+
 		public:
-			TFunctionValueListParameter() { }
+			TFunctionValueListParameter() : mInterpolateType(EInterpolateType::NONE) { }
 			virtual ~TFunctionValueListParameter() { }
 
 			float Evaluate(int32_t frame) override;

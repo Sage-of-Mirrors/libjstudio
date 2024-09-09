@@ -45,4 +45,4 @@ void JStudio::Engine::TObject::UpdateVariables(TDirector* director, const uint32
 			}
 		}
 	}
-}
+} // TObject::UpdateVariables

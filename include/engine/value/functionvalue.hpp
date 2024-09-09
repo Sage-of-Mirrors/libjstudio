@@ -13,8 +13,12 @@ namespace JStudio
 	{
 		class TFunctionValue
 		{
+		protected:
+			float* mData;
+			uint32_t mDataCount;
+
 		public:
-			TFunctionValue() { }
+			TFunctionValue() : mData(nullptr), mDataCount(0) { }
 			virtual ~TFunctionValue() { }
 
 			virtual float Evaluate(int32_t frame) = 0;
