@@ -11,15 +11,15 @@ namespace JStudio
 {
 	namespace Engine
 	{
-		class TFunctionValueAttribute_Refer;
-		class TFunctionValueAttribute_Range;
-		class TFunctionValueAttribute_Interpolate;
+		class IReferAttribute;
+		class IRangeAttribute;
+		class IInterpolateAttribute;
 
 		struct TFunctionValueAttributeSet
 		{
-			TFunctionValueAttribute_Refer* Refer;
-			TFunctionValueAttribute_Range* Range;
-			TFunctionValueAttribute_Interpolate* Interpolate;
+			IReferAttribute* Refer;
+			IRangeAttribute* Range;
+			IInterpolateAttribute* Interpolate;
 		};
 
 		class TFunctionValue

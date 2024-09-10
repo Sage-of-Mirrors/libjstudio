@@ -2,8 +2,8 @@
 
 #include "types.h"
 #include "functionvalue.hpp"
-#include "functionvalueattribute_range.hpp"
-#include "functionvalueattribute_interpolate.hpp"
+#include "rangeattribute.hpp"
+#include "interpolateattribute.hpp"
 
 namespace bStream
 {
@@ -15,8 +15,8 @@ namespace JStudio
 	namespace Engine
 	{
 		class TFunctionValueListParameter : public TFunctionValue,
-											public TFunctionValueAttribute_Range,
-											public TFunctionValueAttribute_Interpolate
+											public IRangeAttribute,
+											public IInterpolateAttribute
 		{
 			float InterpolateNone();
 			float InterpolateLinear();

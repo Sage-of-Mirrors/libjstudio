@@ -32,7 +32,7 @@ namespace JStudio
 			CLAMP
 		};
 
-		class TFunctionValueAttribute_Range
+		class IRangeAttribute
 		{
 		protected:
 			float mRangeStart;
@@ -51,10 +51,10 @@ namespace JStudio
 			float GetParameterOutside(float value);
 
 		public:
-			TFunctionValueAttribute_Range() : mRangeStart(0.0f), mRangeEnd(0.0f), mRangeWidth(0.0f),
+			IRangeAttribute() : mRangeStart(0.0f), mRangeEnd(0.0f), mRangeWidth(0.0f),
 				mProgressType(EProgressType::POSITIVE), mAdjustType(EAdjustType::NONE), mProgressBase(0.0f), mProgressDirection(0.0f),
 				mUnderflowExtrapolation(EExtrapolateType::RAW), mOverflowExtrapolation(EExtrapolateType::RAW) { }
-			virtual ~TFunctionValueAttribute_Range() { }
+			virtual ~IRangeAttribute() { }
 
 			void PrepareRange();
 

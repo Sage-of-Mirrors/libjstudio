@@ -10,13 +10,13 @@ namespace JStudio
 	{
 		class TFunctionValue;
 
-		class TFunctionValueAttribute_Refer
+		class IReferAttribute
 		{
 			std::vector<TFunctionValue*> mContainer;
 
 		public:
-			TFunctionValueAttribute_Refer() { }
-			virtual ~TFunctionValueAttribute_Refer() { }
+			IReferAttribute() { }
+			virtual ~IReferAttribute() { }
 
 			std::vector<TFunctionValue*>& GetContainer() { return mContainer; }
 		};

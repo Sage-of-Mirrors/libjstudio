@@ -14,14 +14,14 @@ namespace JStudio
 			BSPLINE
 		};
 
-		class TFunctionValueAttribute_Interpolate
+		class IInterpolateAttribute
 		{
 		protected:
 			EInterpolateType mInterpolateType;
 
 		public:
-			TFunctionValueAttribute_Interpolate() : mInterpolateType(EInterpolateType::NONE) { }
-			virtual ~TFunctionValueAttribute_Interpolate() { }
+			IInterpolateAttribute() : mInterpolateType(EInterpolateType::NONE) { }
+			virtual ~IInterpolateAttribute() { }
 
 			void SetInterpolateType(EInterpolateType interpolate) { mInterpolateType = interpolate; }
 		};
