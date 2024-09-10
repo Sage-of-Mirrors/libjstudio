@@ -32,7 +32,7 @@ namespace JStudio
 			CLAMP
 		};
 
-		class TFunctionValueRange
+		class TFunctionValueAttribute_Range
 		{
 			float mRangeStart;
 			float mRangeEnd;
@@ -50,10 +50,10 @@ namespace JStudio
 			float GetParameterOutside(float value);
 
 		public:
-			TFunctionValueRange() : mRangeStart(0.0f), mRangeEnd(0.0f), mRangeWidth(0.0f),
+			TFunctionValueAttribute_Range() : mRangeStart(0.0f), mRangeEnd(0.0f), mRangeWidth(0.0f),
 				mProgressType(EProgressType::POSITIVE), mAdjustType(EAdjustType::NONE), mProgressBase(0.0f), mProgressDirection(0.0f),
 				mUnderflowExtrapolation(EExtrapolateType::RAW), mOverflowExtrapolation(EExtrapolateType::RAW) { }
-			virtual ~TFunctionValueRange() { }
+			virtual ~TFunctionValueAttribute_Range() { }
 
 			void PrepareRange();
 
@@ -71,6 +71,6 @@ namespace JStudio
 				SetOverflowExtrapolationType(over);
 			}
 		};
-	} // namespace Enginef
+	} // namespace Engine
 } // namespace JStudio
 

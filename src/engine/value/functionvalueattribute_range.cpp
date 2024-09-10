@@ -1,14 +1,14 @@
-#include "engine/value/functionvaluerange.hpp"
+#include "engine/value/functionvalueattribute_range.hpp"
 #include "engine/value/extrapolation.hpp"
 
-void JStudio::Engine::TFunctionValueRange::SetRange(float start, float end)
+void JStudio::Engine::TFunctionValueAttribute_Range::SetRange(float start, float end)
 {
 	mRangeStart = start;
 	mRangeEnd = end;
 	mRangeWidth = end - start;
-} // TFunctionValueRange::SetRange
+} // TFunctionValueAttribute_Range::SetRange
 
-void JStudio::Engine::TFunctionValueRange::PrepareRange()
+void JStudio::Engine::TFunctionValueAttribute_Range::PrepareRange()
 {
 	switch (mProgressType)
 	{
@@ -33,9 +33,9 @@ void JStudio::Engine::TFunctionValueRange::PrepareRange()
 		mProgressDirection = -1.0f;
 		break;
 	}
-} // TFunctionValueRange::SetRange
+} // TFunctionValueAttribute_Range::SetRange
 
-float JStudio::Engine::TFunctionValueRange::GetParameter(float inValue, float newRangeStart, float newRangeEnd)
+float JStudio::Engine::TFunctionValueAttribute_Range::GetParameter(float inValue, float newRangeStart, float newRangeEnd)
 {
 	float progress = GetParameterProgress(inValue);
 	float result = 0.0f;
@@ -61,9 +61,9 @@ float JStudio::Engine::TFunctionValueRange::GetParameter(float inValue, float ne
 	}
 
 	return result;
-} // TFunctionValueRange::GetParameter
+} // TFunctionValueAttribute_Range::GetParameter
 
-float JStudio::Engine::TFunctionValueRange::GetParameterOutside(float value)
+float JStudio::Engine::TFunctionValueAttribute_Range::GetParameterOutside(float value)
 {
 	float result = value - mRangeStart;
 	EExtrapolateType extrapolation = EExtrapolateType::RAW;
@@ -94,4 +94,4 @@ float JStudio::Engine::TFunctionValueRange::GetParameterOutside(float value)
 	}
 
 	return result + mRangeStart;
-} // TFunctionValueRange::GetParameterOutside
+} // TFunctionValueAttribute_Range::GetParameterOutside
