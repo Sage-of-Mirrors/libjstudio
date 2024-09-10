@@ -2,6 +2,8 @@
 
 #include "types.h"
 #include "functionvalue.hpp"
+#include "functionvalueattribute_range.hpp"
+#include "functionvalueattribute_interpolate.hpp"
 
 namespace bStream
 {
@@ -12,27 +14,20 @@ namespace JStudio
 {
 	namespace Engine
 	{
-		class TFunctionValueListParameter : public TFunctionValue
+		class TFunctionValueListParameter : public TFunctionValue,
+											public TFunctionValueAttribute_Range,
+											public TFunctionValueAttribute_Interpolate
 		{
-			enum class EInterpolateType
-			{
-				NONE,
-				LINEAR,
-				PLATEAU,
-				BSPLINE
-			};
-
-			EInterpolateType mInterpolateType;
-
 			float InterpolateNone();
 			float InterpolateLinear();
 			float InterpolatePlateau();
 			float InterpolateBSpline();
 
 		public:
-			TFunctionValueListParameter() : mInterpolateType(EInterpolateType::NONE) { }
+			TFunctionValueListParameter() { }
 			virtual ~TFunctionValueListParameter() { }
 
+			TFunctionValueAttributeSet GetAttributeSet() override;
 			float Evaluate(int32_t frame) override;
 
 			bool Deserialize(bStream::CStream* stream) override;

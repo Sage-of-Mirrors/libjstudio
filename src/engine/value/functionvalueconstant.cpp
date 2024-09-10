@@ -1,5 +1,10 @@
 #include "engine/value/functionvalueconstant.hpp"
 
+JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueConstant::GetAttributeSet()
+{
+	return TFunctionValueAttributeSet() = { nullptr, nullptr, nullptr };
+}
+
 float JStudio::Engine::TFunctionValueConstant::Evaluate(int32_t frame)
 {
 	return 0.0f;

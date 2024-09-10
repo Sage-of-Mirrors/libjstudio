@@ -1,5 +1,15 @@
 #include "engine/value/functionvaluelistparameter.hpp"
 
+JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueListParameter::GetAttributeSet()
+{
+	return TFunctionValueAttributeSet() =
+	{
+		nullptr,
+		this,
+		this
+	};
+}
+
 float JStudio::Engine::TFunctionValueListParameter::Evaluate(int32_t frame)
 {
 	return 0.0f;

@@ -10,6 +10,16 @@
 #include <bStream.h>
 #include <iostream>
 
+constexpr uint16_t FUNCVAL_CMD_PREPARE = 0x0000;
+constexpr uint16_t FUNCVAL_CMD_SET_KEY_DATA = 0x0001;
+constexpr uint16_t FUNCVAL_CMD_SET_REFERRALS = 0x0010;
+constexpr uint16_t FUNCVAL_CMD_SET_REFERRALS_BY_INDEX = 0x0011;
+constexpr uint16_t FUNCVAL_CMD_SET_RANGE_BOUNDS = 0x0012;
+constexpr uint16_t FUNCVAL_CMD_SET_RANGE_PROGRESS_TYPE = 0x0013;
+constexpr uint16_t FUNCVAL_CMD_SET_RANGE_ADJUST_TYPE = 0x0014;
+constexpr uint16_t FUNCVAL_CMD_SET_RANGE_EXTRAPOLATION_TYPES = 0x0015;
+constexpr uint16_t FUNCVAL_CMD_SET_INTERPOLATION_TYPE = 0x0016;
+
 void JStudio::IO::STBFile::LoadFunctionValues(bStream::CStream* stream)
 {
 	assert(stream->readUInt32() == FVB_MAGIC);
@@ -51,14 +61,117 @@ void JStudio::IO::STBFile::LoadFunctionValues(bStream::CStream* stream)
 			break;
 		}
 
-		if (funcValObj != nullptr && funcValObj->Deserialize(stream))
+		if (funcValObj != nullptr)
 		{
+			ConfigureFunctionValue(stream, funcValObj);
 			mFunctionValues.push_back(funcValObj);
 		}
 
 		stream->seek(nextFuncValOffset);
 	}
 } // STBFile::LoadFunctionValues
+
+void JStudio::IO::STBFile::ConfigureFunctionValue(bStream::CStream* stream, Engine::TFunctionValue* funcValue)
+{
+	Engine::TFunctionValueAttributeSet attributes = funcValue->GetAttributeSet();
+
+	uint16_t commandSize = stream->readUInt16();
+	while (commandSize != 0)
+	{
+		uint16_t commandType = stream->readUInt16();
+		size_t nextCmdOffset = stream->tell() + (size_t)commandSize;
+
+		switch (commandType)
+		{
+		case FUNCVAL_CMD_PREPARE:
+		{
+			break;
+		}
+		case FUNCVAL_CMD_SET_KEY_DATA:
+		{
+			break;
+		}
+		case FUNCVAL_CMD_SET_REFERRALS:
+		{
+			if (attributes.Refer != nullptr)
+			{
+				// TODO: Set referrals by name
+			}
+
+			break;
+		}
+		case FUNCVAL_CMD_SET_REFERRALS_BY_INDEX:
+		{
+			if (attributes.Refer != nullptr)
+			{
+				// TODO: Set referrals by index
+			}
+
+			break;
+		}
+		case FUNCVAL_CMD_SET_RANGE_BOUNDS:
+		{
+			float rangeStart = stream->readFloat();
+			float rangeEnd = stream->readFloat();
+
+			if (attributes.Range != nullptr)
+			{
+				attributes.Range->SetRange(rangeStart, rangeEnd);
+			}
+
+			break;
+		}
+		case FUNCVAL_CMD_SET_RANGE_PROGRESS_TYPE:
+		{
+			Engine::EProgressType progressType = (Engine::EProgressType)stream->readUInt32();
+
+			if (attributes.Range != nullptr)
+			{
+				attributes.Range->SetProgressType(progressType);
+			}
+
+			break;
+		}
+		case FUNCVAL_CMD_SET_RANGE_ADJUST_TYPE:
+		{
+			Engine::EAdjustType adjustType = (Engine::EAdjustType)stream->readUInt32();
+
+			if (attributes.Range != nullptr)
+			{
+				attributes.Range->SetAdjustType(adjustType);
+			}
+
+			break;
+		}
+		case FUNCVAL_CMD_SET_RANGE_EXTRAPOLATION_TYPES:
+		{
+			Engine::EExtrapolateType underflowExtrapolate = (Engine::EExtrapolateType)stream->readUInt16();
+			Engine::EExtrapolateType overflowExtrapolate = (Engine::EExtrapolateType)stream->readUInt16();
+
+			if (attributes.Range != nullptr)
+			{
+				attributes.Range->SetExtrapolationTypes(underflowExtrapolate, overflowExtrapolate);
+			}
+
+			break;
+		}
+		case FUNCVAL_CMD_SET_INTERPOLATION_TYPE:
+		{
+			Engine::EInterpolateType interpolateType = (Engine::EInterpolateType)stream->readUInt32();
+
+			if (attributes.Interpolate != nullptr)
+			{
+				attributes.Interpolate->SetInterpolateType(interpolateType);
+			}
+
+			break;
+		}
+		}
+
+		stream->seek(nextCmdOffset);
+		commandSize = stream->readUInt16();
+	}
+} // STBFile::ConfigureFunctionValue
 
 void JStudio::IO::STBFile::LoadObject(uint32_t objectFourcc, bStream::CStream* stream)
 {

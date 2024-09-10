@@ -1,5 +1,10 @@
 #include "engine/value/functionvaluehermite.hpp"
 
+JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueHermite::GetAttributeSet()
+{
+	return TFunctionValueAttributeSet() = { nullptr, nullptr, nullptr };
+}
+
 float JStudio::Engine::TFunctionValueHermite::Evaluate(int32_t frame)
 {
 	return 0.0f;

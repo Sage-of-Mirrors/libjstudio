@@ -1,5 +1,10 @@
 #include "engine/value/functionvaluetransition.hpp"
 
+JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueTransition::GetAttributeSet()
+{
+	return TFunctionValueAttributeSet() = { nullptr, nullptr, nullptr };
+}
+
 float JStudio::Engine::TFunctionValueTransition::Evaluate(int32_t frame)
 {
 	return 0.0f;

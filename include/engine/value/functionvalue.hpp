@@ -11,6 +11,17 @@ namespace JStudio
 {
 	namespace Engine
 	{
+		class TFunctionValueAttribute_Refer;
+		class TFunctionValueAttribute_Range;
+		class TFunctionValueAttribute_Interpolate;
+
+		struct TFunctionValueAttributeSet
+		{
+			TFunctionValueAttribute_Refer* Refer;
+			TFunctionValueAttribute_Range* Range;
+			TFunctionValueAttribute_Interpolate* Interpolate;
+		};
+
 		class TFunctionValue
 		{
 		protected:
@@ -21,6 +32,7 @@ namespace JStudio
 			TFunctionValue() : mData(nullptr), mDataCount(0) { }
 			virtual ~TFunctionValue() { }
 
+			virtual TFunctionValueAttributeSet GetAttributeSet() = 0;
 			virtual float Evaluate(int32_t frame) = 0;
 
 			virtual bool Deserialize(bStream::CStream* stream) = 0;

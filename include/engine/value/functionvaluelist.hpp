@@ -18,6 +18,7 @@ namespace JStudio
 			TFunctionValueList() { }
 			virtual ~TFunctionValueList() { }
 
+			TFunctionValueAttributeSet GetAttributeSet() override;
 			float Evaluate(int32_t frame) override;
 
 			bool Deserialize(bStream::CStream* stream) override;

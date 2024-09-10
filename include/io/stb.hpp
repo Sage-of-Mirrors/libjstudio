@@ -27,6 +27,8 @@ namespace JStudio
 			uint32_t mLength;
 
 			void LoadFunctionValues(bStream::CStream* stream);
+			void ConfigureFunctionValue(bStream::CStream* stream, Engine::TFunctionValue* funcValue);
+
 			void LoadObject(uint32_t objectFourcc, bStream::CStream* stream);
 
 		public:

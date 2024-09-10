@@ -1,5 +1,10 @@
 #include "engine/value/functionvaluecomposite.hpp"
 
+JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueComposite::GetAttributeSet()
+{
+	return TFunctionValueAttributeSet() = { nullptr, nullptr, nullptr };
+}
+
 float JStudio::Engine::TFunctionValueComposite::Evaluate(int32_t frame)
 {
 	return 0.0f;

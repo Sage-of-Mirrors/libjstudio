@@ -34,6 +34,7 @@ namespace JStudio
 
 		class TFunctionValueAttribute_Range
 		{
+		protected:
 			float mRangeStart;
 			float mRangeEnd;
 			float mRangeWidth;
