@@ -5,6 +5,8 @@
 #include "engine/director/director.hpp"
 #include "engine/directors.hpp"
 
+#include "engine/value/functionvaluelistparameter.hpp"
+
 #include <bStream.h>
 #include <iostream>
 

@@ -24,19 +24,14 @@ namespace JStudio
 
 		class TFunctionValue
 		{
-		protected:
-			float* mData;
-			uint32_t mDataCount;
-
 		public:
-			TFunctionValue() : mData(nullptr), mDataCount(0) { }
+			TFunctionValue() { }
 			virtual ~TFunctionValue() { }
 
 			virtual TFunctionValueAttributeSet GetAttributeSet() = 0;
 			virtual float Evaluate(int32_t frame) = 0;
 
-			virtual bool Deserialize(bStream::CStream* stream) = 0;
-			virtual bool Serialize(bStream::CStream* stream) = 0;
+			virtual void LoadData(bStream::CStream* stream) = 0;
 		};
 	} // namespace Engine
 } // namespace JStudio

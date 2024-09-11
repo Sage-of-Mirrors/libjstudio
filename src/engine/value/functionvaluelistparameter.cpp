@@ -1,5 +1,11 @@
 #include "engine/value/functionvaluelistparameter.hpp"
 
+#include <bstream.h>
+#include <cmath>
+
+constexpr float SECONDS_TO_FRAMES = 30.0f;
+constexpr float FRAMES_TO_SECONDS = 1.0f / 30.0f;
+
 JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueListParameter::GetAttributeSet()
 {
 	return TFunctionValueAttributeSet() =
@@ -8,22 +14,22 @@ JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueListP
 		this,
 		this
 	};
-}
+} // TFunctionValueListParameter::GetAttributeSet
 
 float JStudio::Engine::TFunctionValueListParameter::Evaluate(int32_t frame)
 {
 	return 0.0f;
 } // TFunctionValueListParameter::Evaluate
 
-bool JStudio::Engine::TFunctionValueListParameter::Deserialize(bStream::CStream* stream)
+void JStudio::Engine::TFunctionValueListParameter::LoadData(bStream::CStream* stream)
 {
-	return true;
-} // TFunctionValueListParameter::Deserialize
+	uint32_t keyCount = stream->readUInt32();
 
-bool JStudio::Engine::TFunctionValueListParameter::Serialize(bStream::CStream* stream)
-{
-	return true;
-} // TFunctionValueListParameter::Serialize
+	for (uint32_t i = 0; i < keyCount; i++)
+	{
+		mKeys.push_back(TKeyData() = { std::roundf(stream->readFloat() * SECONDS_TO_FRAMES), stream->readFloat()});
+	}
+} // TFunctionValueListParameter::LoadData
 
 float JStudio::Engine::TFunctionValueListParameter::InterpolateNone()
 {

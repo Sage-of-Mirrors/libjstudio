@@ -21,8 +21,7 @@ namespace JStudio
 			TFunctionValueAttributeSet GetAttributeSet() override;
 			float Evaluate(int32_t frame) override;
 
-			bool Deserialize(bStream::CStream* stream) override;
-			bool Serialize(bStream::CStream* stream) override;
+			void LoadData(bStream::CStream* stream) override;
 		};
 	} // namespace Engine
 } // namespace JStudio

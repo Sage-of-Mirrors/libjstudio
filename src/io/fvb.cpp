@@ -5,6 +5,7 @@
 #include "engine/functionvalues.hpp"
 
 #include <bStream.h>
+#include <cmath>
 
 constexpr uint16_t FUNCVAL_CMD_PREPARE = 0x0000;
 constexpr uint16_t FUNCVAL_CMD_SET_KEY_DATA = 0x0001;
@@ -15,6 +16,9 @@ constexpr uint16_t FUNCVAL_CMD_SET_RANGE_PROGRESS_TYPE = 0x0013;
 constexpr uint16_t FUNCVAL_CMD_SET_RANGE_ADJUST_TYPE = 0x0014;
 constexpr uint16_t FUNCVAL_CMD_SET_RANGE_EXTRAPOLATION_TYPES = 0x0015;
 constexpr uint16_t FUNCVAL_CMD_SET_INTERPOLATION_TYPE = 0x0016;
+
+constexpr float SECONDS_TO_FRAMES = 30.0f;
+constexpr float FRAMES_TO_SECONDS = 1.0f / 30.0f;
 
 std::vector<JStudio::Engine::TFunctionValue*> JStudio::IO::FunctionValueIO::LoadFunctionValues(bStream::CStream* stream)
 {
@@ -89,6 +93,7 @@ void JStudio::IO::FunctionValueIO::ConfigureFunctionValue(bStream::CStream* stre
 		}
 		case FUNCVAL_CMD_SET_KEY_DATA:
 		{
+			funcValue->LoadData(stream);
 			break;
 		}
 		case FUNCVAL_CMD_SET_REFERRALS:
@@ -111,8 +116,8 @@ void JStudio::IO::FunctionValueIO::ConfigureFunctionValue(bStream::CStream* stre
 		}
 		case FUNCVAL_CMD_SET_RANGE_BOUNDS:
 		{
-			float rangeStart = stream->readFloat();
-			float rangeEnd = stream->readFloat();
+			float rangeStart = std::roundf(stream->readFloat() * SECONDS_TO_FRAMES);
+			float rangeEnd = std::roundf(stream->readFloat() * SECONDS_TO_FRAMES);
 
 			if (attributes.Range != nullptr)
 			{
