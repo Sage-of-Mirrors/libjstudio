@@ -9,7 +9,13 @@ namespace JStudio
 	{
 		class TObjectActor : public TObject
 		{
+		public:
+			TObjectActor()
+			{
+				mType = EObjectType::ACTOR;
+			}
 
+			virtual ~TObjectActor() { }
 		};
 	} // namespace Engine
 } // namespace JStudio

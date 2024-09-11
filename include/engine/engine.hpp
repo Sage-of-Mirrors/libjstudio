@@ -16,22 +16,26 @@ namespace JStudio
 	{
 		class TDirector;
 		class TObject;
+		class TObjectCamera;
 
 		class TEngine
 		{
 			std::vector<TDirector*> mDirectors;
 			std::vector<TObject*> mObjects;
 
+			TObjectCamera* mCameraObject;
+
 			uint32_t mLength;
 
 		public:
-			TEngine() { }
+			TEngine() : mCameraObject(nullptr), mLength(0) { }
 			virtual ~TEngine();
 
 			bool LoadBinary(std::filesystem::path filePath);
 			bool LoadBinary(bStream::CStream* stream);
 
 			uint32_t GetLength() const { return mLength; }
+			TObjectCamera* GetCameraObject() { return mCameraObject; }
 
 			void Update(const uint32_t& frame, float deltaTime);
 		};

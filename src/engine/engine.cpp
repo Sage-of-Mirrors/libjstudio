@@ -3,8 +3,6 @@
 #include "engine/object/object.hpp"
 #include "engine/enginedata.hpp"
 
-#include "engine/object/object_camera.hpp"
-
 #include "io/stb.hpp"
 
 #include <bStream.h>
@@ -22,7 +20,7 @@ JStudio::Engine::TEngine::~TEngine()
 		delete object;
 	}
 	mObjects.clear();
-}
+} // TEngine::~TEngine
 
 bool JStudio::Engine::TEngine::LoadBinary(std::filesystem::path path)
 {
@@ -33,7 +31,7 @@ bool JStudio::Engine::TEngine::LoadBinary(std::filesystem::path path)
 
 	bStream::CFileStream stream(path.generic_u8string(), bStream::Big, bStream::In);
 	return LoadBinary(&stream);
-}
+} // TEngine::LoadBinary
 
 bool JStudio::Engine::TEngine::LoadBinary(bStream::CStream* stream)
 {
@@ -50,7 +48,8 @@ bool JStudio::Engine::TEngine::LoadBinary(bStream::CStream* stream)
 	assert(mDirectors.size() != 0);
 
 	std::vector<TFunctionValue*> funcValues = file.GetFunctionValues();
-	//assert(funcValues.size() != 0);
+	assert(funcValues.size() != 0);
+
 	gEngineData.SetFunctionValues(file.GetFunctionValues());
 
 	for (TDirector* director : mDirectors)
@@ -60,10 +59,15 @@ bool JStudio::Engine::TEngine::LoadBinary(bStream::CStream* stream)
 
 		assert(object != nullptr);
 		mObjects.push_back(object);
+
+		if (object->GetObjectType() == EObjectType::CAMERA)
+		{
+			mCameraObject = (TObjectCamera*)object;
+		}
 	}
 
 	return true;
-}
+} // TEngine::LoadBinary
 
 void JStudio::Engine::TEngine::Update(const uint32_t& frame, float deltaTime)
 {
@@ -72,4 +76,4 @@ void JStudio::Engine::TEngine::Update(const uint32_t& frame, float deltaTime)
 		mObjects[i]->UpdateVariables(mDirectors[i], frame, deltaTime);
 		mObjects[i]->Update();
 	}
-}
+} // TEngine::Update

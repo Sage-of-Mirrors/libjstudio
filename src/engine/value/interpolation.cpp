@@ -5,19 +5,19 @@
 constexpr float ONE_SIXTH = 1.0f / 6.0f;
 constexpr float TWO_THIRDS = 2.0f / 3.0f;
 
-float JStudio::Engine::InterpolateHermite(float c0, float c1, float x1, float c2, float x2, float c3, float x3)
+float JStudio::Engine::InterpolateHermite(float factor, float timeA, float valueA, float outTangent, float timeB, float valueB, float inTangent)
 {
-	float a = c0 - c1;
-	float b = a * (1.0f / (x2 - c1));
+	float a = factor - timeA;
+	float b = a * (1.0f / (timeB - timeA));
 	float c = b - 1.0f;
 	float d = (3.0f + -2.0f * b) * (b * b);
 
 	float cab = c * a * b;
-	float coeffx3 = cab * x3;
+	float coeffx3 = cab * inTangent;
 	float cca = c * c * a;
-	float coeffc2 = cca * c2;
+	float coeffc2 = cca * outTangent;
 
-	return ((1.0f - d) * x1 + (d * c3)) + coeffc2 + coeffx3;
+	return ((1.0f - d) * valueA + (d * valueB)) + coeffc2 + coeffx3;
 } // InterpolateHermite
 
 float JStudio::Engine::InterpolateBSplineUniform(float factor, float p2, float p3, float p4, float p5)

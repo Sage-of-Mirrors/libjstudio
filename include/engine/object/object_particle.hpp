@@ -9,7 +9,13 @@ namespace JStudio
 	{
 		class TObjectParticle : public TObject
 		{
+		public:
+			TObjectParticle()
+			{
+				mType = EObjectType::PARTICLE;
+			}
 
+			virtual ~TObjectParticle() { }
 		};
 	} // namespace Engine
 } // namespace JStudio

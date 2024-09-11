@@ -31,7 +31,11 @@ float JStudio::Engine::TFunctionValueListParameter::Evaluate(int32_t frame)
 		[sanitizedFrame](const TKeyData& data) { return sanitizedFrame < data.Time; }
 	);
 
-	if (curKeyItr == mKeys.end())
+	if (curKeyItr == mKeys.begin())
+	{
+		return mKeys.front().Value;
+	}
+	else if (curKeyItr == mKeys.end())
 	{
 		return mKeys.back().Value;
 	}
@@ -87,6 +91,11 @@ float JStudio::Engine::TFunctionValueListParameter::InterpolatePlateau(float tim
 
 float JStudio::Engine::TFunctionValueListParameter::InterpolateBSpline(float time, std::vector<TKeyData>::iterator curKey)
 {
+	if (mKeys.size() == 2)
+	{
+		return InterpolateLinear(time, curKey);
+	}
+
 	std::vector<float> controlPoints(4);
 	std::vector<float> knots(6);
 

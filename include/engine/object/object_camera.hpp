@@ -26,6 +26,8 @@ namespace JStudio
 			{
 				mNumVariables = NUM_CAMERA_VARIABLES;
 				mVariablesHead = mVariables;
+
+				mType = EObjectType::CAMERA;
 			}
 
 			virtual ~TObjectCamera() { }
@@ -35,7 +37,7 @@ namespace JStudio
 			void WriteDebugStream()
 			{
 				std::ofstream stream;
-				stream.open("C:\\Hacking\\titletest.obj");
+				stream.open("C:\\Hacking\\jabtest.obj");
 
 				std::string s = mDebugStream.str();
 				stream << s;

@@ -9,7 +9,13 @@ namespace JStudio
 	{
 		class TObjectSound : public TObject
 		{
+		public:
+			TObjectSound()
+			{
+				mType = EObjectType::SOUND;
+			}
 
+			virtual ~TObjectSound() { }
 		};
 	} // namespace Engine
 } // namespace JStudio
