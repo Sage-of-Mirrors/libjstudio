@@ -29,6 +29,10 @@ namespace JStudio
 
 			std::vector<TFunctionValue*>& GetFunctionValues() { return mFunctionValues; }
 			void SetFunctionValues(std::vector<TFunctionValue*>& values) { mFunctionValues = values; }
+
+			TFunctionValue* GetFunctionValue(uint32_t index);
 		};
+
+		inline TEngineData gEngineData = TEngineData();
 	} // namespace Engine
 } // namespace JStudio

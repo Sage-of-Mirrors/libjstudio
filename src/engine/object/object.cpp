@@ -2,6 +2,7 @@
 #include "engine/value/variablevalue.hpp"
 #include "engine/director/director.hpp"
 #include "engine/track/track.hpp"
+#include "engine/enginedata.hpp"
 
 void JStudio::Engine::TObject::UpdateVariables(TDirector* director, const uint32_t& frame, const float& deltaTime)
 {
@@ -12,14 +13,6 @@ void JStudio::Engine::TObject::UpdateVariables(TDirector* director, const uint32
 
 	for (uint32_t i = 0; i < mNumVariables; i++)
 	{
-		if (mVariablesHead[i].GetUpdateByFrameCount())
-		{
-			float updatedValue = (float)mVariablesHead[i].GetFrameCount() * mVariablesHead[i].GetUpdateRate() * deltaTime;
-			mVariablesHead[i].SetValue(updatedValue);
-
-			mVariablesHead[i].IncrementFrameCount();
-		}
-
 		TTrack* track = director->GetTrack(i);
 		if (track != nullptr)
 		{
@@ -29,20 +22,22 @@ void JStudio::Engine::TObject::UpdateVariables(TDirector* director, const uint32
 				switch (key.Type)
 				{
 				case EUpdateType::IMMEDIATE:
-					mVariablesHead[i].SetValue(key.Value);
-					mVariablesHead[i].SetUpdateByFrameCount(false);
+					mVariablesHead[i].SetImmediateUpdate(key.Value);
 					break;
 				case EUpdateType::TIME:
-					mVariablesHead[i].SetUpdateByFrameCount(true);
-					mVariablesHead[i].SetUpdateRate(key.Value);
+					mVariablesHead[i].SetLinearUpdate(key.Value);
 					break;
 				case EUpdateType::FUNCVALUE_INDEX:
+					mVariablesHead[i].SetFunctionValueUpdate((uint32_t)key.Value);
 					break;
 				case EUpdateType::NONE:
 				default:
+					mVariablesHead[i].SetImmediateUpdate(key.Value);
 					break;
 				}
 			}
 		}
+
+		mVariablesHead[i].Update(deltaTime);
 	}
 } // TObject::UpdateVariables

@@ -3,11 +3,11 @@
 #include "engine/object/object.hpp"
 #include "engine/enginedata.hpp"
 
+#include "engine/object/object_camera.hpp"
+
 #include "io/stb.hpp"
 
 #include <bStream.h>
-
-extern JStudio::Engine::TEngineData gEngineData;
 
 JStudio::Engine::TEngine::~TEngine()
 {

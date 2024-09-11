@@ -1,47 +1,66 @@
 #include "engine/value/variablevalue.hpp"
+#include "engine/value/functionvalue.hpp"
+#include "engine/enginedata.hpp"
 
 float JStudio::Engine::TVariableValue::GetValue() const
 {
 	return mValue;
 } // TVariableValue::GetValue
 
-void JStudio::Engine::TVariableValue::SetValue(float value)
+void JStudio::Engine::TVariableValue::Update(float deltaTime)
 {
-	mValue = value;
-} // TVariableValue::SetValue
+	switch (mUpdateType)
+	{
+	case EVariableUpdateType::LINEAR:
+	{
+		mValue = (float)mFrameCount * mUpdateRate * deltaTime;
+		break;
+	}
+	case EVariableUpdateType::FUNCTION_VALUE:
+	{
+		TFunctionValue* funcVal = gEngineData.GetFunctionValue(mFunctionValueIndex);
+		if (funcVal != nullptr)
+		{
+			mValue = funcVal->Evaluate((int32_t)mFrameCount);
+		}
+		break;
+	}
+	case EVariableUpdateType::NONE:
+	default:
+	{
+		// Do nothing
+		break;
+	}
+	}
 
-bool JStudio::Engine::TVariableValue::GetUpdateByFrameCount() const
-{
-	return bUpdateValueByFrameCount;
-} // TVariableValue::GetUpdateByFrameCount
-
-void JStudio::Engine::TVariableValue::SetUpdateByFrameCount(bool update)
-{
-	bUpdateValueByFrameCount = update;
-	ResetFrameCount();
-} // TVariableValue::SetUpdateByFrameCount
-
-uint32_t JStudio::Engine::TVariableValue::GetFrameCount() const
-{
-	return mFrameCount;
-} // TVariableValue::GetFrameCount
-
-void JStudio::Engine::TVariableValue::IncrementFrameCount()
-{
 	mFrameCount++;
-} // TVariableValue::IncrementFrameCount
+} // TVariableValue::Update
 
-void JStudio::Engine::TVariableValue::ResetFrameCount()
+void JStudio::Engine::TVariableValue::Reset()
 {
 	mFrameCount = 0;
-} // TVariableValue::ResetFrameCount
+} // TVariableValue::Reset
 
-float JStudio::Engine::TVariableValue::GetUpdateRate() const
+void JStudio::Engine::TVariableValue::SetImmediateUpdate(float value)
 {
-	return mUpdateRate;
-} // TVariableValue::GetUpdateRate
+	mUpdateType = EVariableUpdateType::NONE;
+	mValue = value;
 
-void JStudio::Engine::TVariableValue::SetUpdateRate(float value)
+	Reset();
+} // TVariableValue::SetImmediateUpdate
+
+void JStudio::Engine::TVariableValue::SetLinearUpdate(float updateRate)
 {
-	mUpdateRate = value;
-} // TVariableValue::SetUpdateRate
+	mUpdateType = EVariableUpdateType::LINEAR;
+	mUpdateRate = updateRate;
+
+	Reset();
+} // TVariableValue::SetLinearUpdate
+
+void JStudio::Engine::TVariableValue::SetFunctionValueUpdate(uint32_t funcValIdx)
+{
+	mUpdateType = EVariableUpdateType::FUNCTION_VALUE;
+	mFunctionValueIndex = funcValIdx;
+
+	Reset();
+} // TVariableValue::SetFunctionValueUpdate

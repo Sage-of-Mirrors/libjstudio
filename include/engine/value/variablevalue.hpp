@@ -6,30 +6,38 @@ namespace JStudio
 {
 	namespace Engine
 	{
+		enum class EVariableUpdateType
+		{
+			NONE,
+			LINEAR,
+			FUNCTION_VALUE
+		};
+
 		class TVariableValue
 		{
 			float mValue;
 
-			bool bUpdateValueByFrameCount;
+			EVariableUpdateType mUpdateType;
 			uint32_t mFrameCount;
-			float mUpdateRate;
+
+			union
+			{
+				float mUpdateRate;
+				uint32_t mFunctionValueIndex;
+			};
 
 		public:
-			TVariableValue() : mValue(0.0f), mFrameCount(0), bUpdateValueByFrameCount(false), mUpdateRate(0.0f) { }
+			TVariableValue() : mValue(0.0f), mFrameCount(0), mUpdateType(EVariableUpdateType::NONE) { }
 			virtual ~TVariableValue() { }
 
 			float GetValue() const;
-			void SetValue(float value);
 
-			bool GetUpdateByFrameCount() const;
-			void SetUpdateByFrameCount(bool update);
+			void Update(float deltaTime);
+			void Reset();
 
-			uint32_t GetFrameCount() const;
-			void IncrementFrameCount();
-			void ResetFrameCount();
-
-			float GetUpdateRate() const;
-			void SetUpdateRate(float value);
+			void SetImmediateUpdate(float value);
+			void SetLinearUpdate(float updateRate);
+			void SetFunctionValueUpdate(uint32_t funcValIdx);
 		};
 	} // namespace Engine
 } // namespace JStudio

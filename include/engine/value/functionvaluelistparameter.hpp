@@ -28,10 +28,10 @@ namespace JStudio
 
 			std::vector<TKeyData> mKeys;
 
-			float InterpolateNone();
-			float InterpolateLinear();
-			float InterpolatePlateau();
-			float InterpolateBSpline();
+			float InterpolateNone(float time, std::vector<TKeyData>::iterator curKey);
+			float InterpolateLinear(float time, std::vector<TKeyData>::iterator curKey);
+			float InterpolatePlateau(float time, std::vector<TKeyData>::iterator curKey);
+			float InterpolateBSpline(float time, std::vector<TKeyData>::iterator curKey);
 
 		public:
 			TFunctionValueListParameter() { }
