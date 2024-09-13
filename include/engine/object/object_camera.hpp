@@ -5,6 +5,8 @@
 
 #include "engine/value/variablevalue.hpp"
 
+#include <glm/glm.hpp>
+
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -33,6 +35,12 @@ namespace JStudio
 			virtual ~TObjectCamera() { }
 
 			void Update() override;
+
+			glm::vec3 GetEyePosition();
+			glm::vec3 GetTargetPosition();
+			float GetFovY();
+			float GetNearPlane();
+			float GetFarPlane();
 
 			void WriteDebugStream()
 			{
