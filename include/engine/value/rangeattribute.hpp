@@ -58,7 +58,7 @@ namespace JStudio
 
 			void PrepareRange();
 
-			float GetParameter(float inValue, float newRangeStart, float newRangeEnd);
+			float GetParameter(float inValue, float newRangeStart = 0.0f, float newRangeEnd = 0.0f);
 
 			void SetRange(float start, float end);
 			void SetProgressType(EProgressType progress) { mProgressType = progress; PrepareRange(); }

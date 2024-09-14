@@ -17,7 +17,7 @@ float JStudio::Engine::InterpolateHermite(float factor, float timeA, float value
 	float cca = c * c * a;
 	float coeffc2 = cca * outTangent;
 
-	return ((1.0f - d) * valueA + (d * valueB)) + coeffc2 + coeffx3;
+	return b * c * a * inTangent + a * c * c * outTangent + (1.0f - d) * valueA + d * valueB;
 } // InterpolateHermite
 
 float JStudio::Engine::InterpolateBSplineUniform(float factor, float p2, float p3, float p4, float p5)

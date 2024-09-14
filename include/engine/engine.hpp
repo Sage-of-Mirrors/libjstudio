@@ -38,6 +38,9 @@ namespace JStudio
 			TObjectCamera* GetCameraObject() { return mCameraObject; }
 
 			void Update(const uint32_t& frame, float deltaTime);
+
+			bool IsPuasedForMessage();
+			void DismissMessage();
 		};
 	} // namespace Engine
 } // namespace JStudio

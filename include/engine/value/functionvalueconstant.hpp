@@ -14,8 +14,10 @@ namespace JStudio
 	{
 		class TFunctionValueConstant : public TFunctionValue
 		{
+			float mValue;
+
 		public:
-			TFunctionValueConstant() { }
+			TFunctionValueConstant() : mValue(0.0f) {}
 			virtual ~TFunctionValueConstant() { }
 
 			TFunctionValueAttributeSet GetAttributeSet() override;

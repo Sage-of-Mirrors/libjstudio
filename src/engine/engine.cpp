@@ -77,3 +77,13 @@ void JStudio::Engine::TEngine::Update(const uint32_t& frame, float deltaTime)
 		mObjects[i]->Update();
 	}
 } // TEngine::Update
+
+bool JStudio::Engine::TEngine::IsPuasedForMessage()
+{
+	return gEngineData.GetHaltForInput();
+} // TEngine::IsPuasedForMessage
+
+void JStudio::Engine::TEngine::DismissMessage()
+{
+	gEngineData.SetHaltForInput(false);
+} // TEngine::DismissMessage

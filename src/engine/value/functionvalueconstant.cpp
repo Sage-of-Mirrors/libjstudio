@@ -9,10 +9,10 @@ JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueConst
 
 float JStudio::Engine::TFunctionValueConstant::Evaluate(int32_t frame)
 {
-	return 0.0f;
+	return mValue;
 } // TFunctionValueConstant::Evaluate
 
 void JStudio::Engine::TFunctionValueConstant::LoadData(bStream::CStream* stream)
 {
-
+	mValue = stream->readFloat();
 } // TFunctionValueConstant::LoadData

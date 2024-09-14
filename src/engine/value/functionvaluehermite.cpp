@@ -57,14 +57,14 @@ void JStudio::Engine::TFunctionValueHermite::LoadData(bStream::CStream* stream)
 		{
 			std::roundf(stream->readFloat() * SECONDS_TO_FRAMES),
 			stream->readFloat(),
-			stream->readFloat(),
+			stream->readFloat() * FRAMES_TO_SECONDS,
 			0.0f
 		};
 
 
 		if (keySize == 4)
 		{
-			newKey.OutTangent = stream->readFloat();
+			newKey.OutTangent = stream->readFloat() * FRAMES_TO_SECONDS;
 		}
 		else
 		{

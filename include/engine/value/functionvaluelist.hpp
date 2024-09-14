@@ -1,7 +1,10 @@
 #pragma once
 
 #include "types.h"
+
 #include "functionvalue.hpp"
+#include "rangeattribute.hpp"
+#include "interpolateattribute.hpp"
 
 namespace bStream
 {
@@ -12,7 +15,9 @@ namespace JStudio
 {
 	namespace Engine
 	{
-		class TFunctionValueList : public TFunctionValue
+		class TFunctionValueList : public TFunctionValue,
+								   public IRangeAttribute,
+								   public IInterpolateAttribute
 		{
 		public:
 			TFunctionValueList() { }

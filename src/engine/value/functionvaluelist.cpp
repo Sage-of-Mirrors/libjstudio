@@ -4,7 +4,7 @@
 
 JStudio::Engine::TFunctionValueAttributeSet JStudio::Engine::TFunctionValueList::GetAttributeSet()
 {
-	return TFunctionValueAttributeSet() = { nullptr, nullptr, nullptr };
+	return TFunctionValueAttributeSet() = { nullptr, this, this };
 } // TFunctionValueList::GetAttributeSet
 
 float JStudio::Engine::TFunctionValueList::Evaluate(int32_t frame)
