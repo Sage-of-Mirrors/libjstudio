@@ -1,6 +1,9 @@
 #include "engine/engine.hpp"
+
 #include "engine/director/director.hpp"
 #include "engine/object/object.hpp"
+#include "engine/object/object_control.hpp"
+
 #include "engine/enginedata.hpp"
 
 #include "io/stb.hpp"
@@ -64,6 +67,10 @@ bool JStudio::Engine::TEngine::LoadBinary(bStream::CStream* stream)
 		{
 			mCameraObject = (TObjectCamera*)object;
 		}
+		else if (object->GetObjectType() == EObjectType::CONTROL)
+		{
+			mControlObject = (TObjectControl*)object;
+		}
 	}
 
 	return true;
@@ -75,6 +82,12 @@ void JStudio::Engine::TEngine::Update(const uint32_t& frame, float deltaTime)
 	{
 		mObjects[i]->UpdateVariables(mDirectors[i], frame, deltaTime);
 		mObjects[i]->Update();
+	}
+
+	if (mControlObject->GetMessageHalt())
+	{
+		gEngineData.SetHaltForInput(true);
+		mControlObject->ClearMessageHalt();
 	}
 } // TEngine::Update
 

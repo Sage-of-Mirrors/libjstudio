@@ -79,9 +79,10 @@ bool JStudio::IO::STBFile::Deserialize(bStream::CStream* stream)
 		std::cout << "STBFile::Deserialize(): Unexpected watermark? (got \'" << watermark << "\')" << std::endl;
 	}
 
-	// These two fields are the same in most files I've seen...
 	assert(stream->readUInt32() == 0);
-	assert(stream->readUInt32() == 3);
+
+	uint32_t version = stream->readUInt32();
+	assert(version == 3 || version == 4);
 
 	// Read in the objects.
 	for (uint32_t i = 0; i < objectCount; i++)

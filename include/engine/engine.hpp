@@ -17,6 +17,7 @@ namespace JStudio
 		class TDirector;
 		class TObject;
 		class TObjectCamera;
+		class TObjectControl;
 
 		class TEngine
 		{
@@ -24,6 +25,7 @@ namespace JStudio
 			std::vector<TObject*> mObjects;
 
 			TObjectCamera* mCameraObject;
+			TObjectControl* mControlObject;
 
 			uint32_t mLength;
 
