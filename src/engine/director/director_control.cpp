@@ -52,3 +52,14 @@ bool JStudio::Engine::TDirectorControl::Deserialize(bStream::CStream* stream, ui
 
 	return true;
 } // TDirectorControl::Deserialize
+
+JStudio::Engine::TDirectorMetadata JStudio::Engine::TDirectorControl::GetMetadata()
+{
+	TDirectorMetadata data = { "Control" };
+
+	TTrackMetadata controlTrack = mTracks[TRACK_MESSAGE_HALT].GetMetadata();
+	controlTrack.Name = "Pause Playback";
+	data.Tracks.push_back(controlTrack);
+
+	return data;
+}

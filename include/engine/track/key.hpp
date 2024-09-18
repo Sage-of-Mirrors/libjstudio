@@ -20,6 +20,7 @@ namespace JStudio
 		{
 			float Value;
 			uint32_t Time;
+			uint32_t Length;
 			EUpdateType Type;
 		};
 	} // namespace Engine

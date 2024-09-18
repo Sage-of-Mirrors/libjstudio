@@ -84,12 +84,24 @@ void JStudio::Engine::TEngine::Update(const uint32_t& frame, float deltaTime)
 		mObjects[i]->Update();
 	}
 
-	if (mControlObject->GetMessageHalt())
+	if (mControlObject != nullptr && mControlObject->GetMessageHalt())
 	{
 		gEngineData.SetHaltForInput(true);
 		mControlObject->ClearMessageHalt();
 	}
 } // TEngine::Update
+
+std::vector<JStudio::Engine::TDirectorMetadata> JStudio::Engine::TEngine::GetDirectorMetadata()
+{
+	std::vector<TDirectorMetadata> data;
+
+	for (TDirector* dir : mDirectors)
+	{
+		data.push_back(dir->GetMetadata());
+	}
+
+	return data;
+}
 
 bool JStudio::Engine::TEngine::IsPuasedForMessage()
 {

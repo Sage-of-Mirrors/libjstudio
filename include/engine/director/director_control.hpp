@@ -34,6 +34,7 @@ namespace JStudio
 			virtual ~TDirectorControl() { }
 
 			virtual TObject* CreateObject() override { return new TObjectControl(); }
+			TDirectorMetadata GetMetadata() override;
 
 			bool Deserialize(bStream::CStream* stream, uint32_t& demoLength) override;
 		};

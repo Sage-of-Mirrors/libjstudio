@@ -29,6 +29,7 @@ constexpr int TRACK_UNK_0026     = 0x06;
 constexpr int TRACK_UNK_0027     = 0x07;
 constexpr int TRACK_DIST_NEAR    = 0x08;
 constexpr int TRACK_DIST_FAR     = 0x09;
+constexpr int CAMERA_TRACKS_MAX  = 0x0A;
 
 void JStudio::Engine::TDirectorCamera::TranslateCommand(uint32_t curFrame, uint16_t cmdType, uint16_t updateType, bStream::CStream* stream)
 {
@@ -91,4 +92,19 @@ void JStudio::Engine::TDirectorCamera::TranslateCommand(uint32_t curFrame, uint1
 		std::cout << "TObjectCamera::TranslateCommand(): Command " << cmdType << " with update type " << updateType << std::endl;
 		break;
 	}
-}
+} // TDirectorCamera::TranslateCommand
+
+JStudio::Engine::TDirectorMetadata JStudio::Engine::TDirectorCamera::GetMetadata()
+{
+	TDirectorMetadata data = { "Camera" };
+
+	for (int i = 0; i < CAMERA_TRACKS_MAX; i++)
+	{
+
+	}
+	TTrackMetadata controlTrack = mTracks[TRACK_MESSAGE_HALT].GetMetadata();
+	controlTrack.Name = "Pause Playback";
+	data.Tracks.push_back(controlTrack);
+
+	return data;
+} // TDirectorCamera::GetMetadata

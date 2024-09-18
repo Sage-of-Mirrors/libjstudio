@@ -7,6 +7,8 @@ namespace JStudio
 {
 	namespace Engine
 	{
+		struct TTrackMetadata;
+
 		class TTrack
 		{
 			std::vector<TKey> mKeys;
@@ -16,10 +18,10 @@ namespace JStudio
 			virtual ~TTrack() { }
 
 			void AddKey(const float& value, const uint32_t& time, const EUpdateType& updateType);
-
 			void SortKeys();
-
 			bool TryGetKey(const uint32_t& time, TKey& outKey);
+
+			TTrackMetadata GetMetadata();
 		};
 	} // namespace Engine
 } // namespace JStudio

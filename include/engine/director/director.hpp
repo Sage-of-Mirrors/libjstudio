@@ -2,6 +2,8 @@
 
 #include "types.h"
 
+#include "engine/track/meta.hpp"
+
 namespace bStream
 {
 	class CStream;
@@ -37,6 +39,8 @@ namespace JStudio
 			virtual bool Serialize(bStream::CStream* stream);
 
 			TTrack* GetTrack(uint32_t trackIndex);
+
+			virtual TDirectorMetadata GetMetadata() { return TDirectorMetadata(); }
 
 			virtual TObject* CreateObject() = 0;
 		};

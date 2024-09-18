@@ -34,6 +34,7 @@ namespace JStudio
 			virtual ~TDirectorCamera() { }
 
 			virtual TObject* CreateObject() override { return new TObjectCamera(); }
+			TDirectorMetadata GetMetadata() override;
 		};
 	} // namespace Engine
 } // namespace JStudio

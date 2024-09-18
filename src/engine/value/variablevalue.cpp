@@ -13,7 +13,7 @@ void JStudio::Engine::TVariableValue::Update(float deltaTime)
 	{
 	case EVariableUpdateType::LINEAR:
 	{
-		mValue = (float)mFrameCount * mUpdateRate * deltaTime;
+		mValue = (float)mFrameCount * mUpdateRate * std::abs(deltaTime);
 		break;
 	}
 	case EVariableUpdateType::FUNCTION_VALUE:
@@ -33,7 +33,17 @@ void JStudio::Engine::TVariableValue::Update(float deltaTime)
 	}
 	}
 
-	mFrameCount++;
+	if (deltaTime >= 0.0f)
+	{
+		mFrameCount++;
+	}
+	else
+	{
+		if (mFrameCount > 0)
+		{
+			mFrameCount--;
+		}
+	}
 } // TVariableValue::Update
 
 void JStudio::Engine::TVariableValue::Reset()
